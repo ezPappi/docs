@@ -1,0 +1,81 @@
+###Some don't work yet.
+
+Get the top request methods
+
+`varnishtop -i RxRequest`
+
+Top urls that missed the cache.
+
+`varnishtop -i TxURL`
+
+Top urls that HIT the cache.
+
+`varnishtop -i RxURL`
+
+All urls that hit the cache in real time.
+
+`varnishlog -o VCL_call hit | grep RxURL`
+
+All urls that MISSED the cache in real time
+
+`varnishlog -i TxURL`
+
+Look at an incoming client request of a specific URL:
+
+`varnishlog -c -o RxURL index.html`
+
+Look at a a backend request of a specific URL:
+
+`varnishlog -b -o TxURL index.html`
+
+See requests for one specific Hostname:
+
+`varnishlog -c -o RxHeader "Host: example.com"`
+
+See the age of the cache objects for a specific hostname:
+
+`varnishlog -c -o RxHeader "Host: example.com" | grep Age`
+
+Most frequent cookies:
+
+`varnishtop -i RxHeader -I Cookie`
+
+Continually updated list of frequent URLs:
+
+`varnishtop -i RxURL`
+
+Most frequent UA strings:
+
+`varnishtop -i RxHeader -C -I ^User-Agent`
+
+Frequent charset (Accept-Charset can be replaced with any other HTTP header):
+
+`varnishtop -i RxHeader -C -I '^Accept-Charset'`
+
+Requests resulting in 404's:
+
+`varnishlog -b -m "RxStatus:404"`
+
+Health check backend servers:
+
+`sudo varnishadm debug.health`
+
+View top useragents:
+
+`varnishtop -C -b -i TxHeader -I "user-agent"`
+
+Top IP addresses:
+
+`varnishtop -i TxHeader -I '^X-Forwarded-For:'`
+
+Traffic sources:
+
+`varnishtop -i RxHeader -I \^Referer`
+
+Which pages the IP address 127.0.0.1 is hitting:
+
+`varnishncsa | grep 127.0.0.1 | awk '{print $7}'`
+
+IP addresses hitting the /client-perf URL:
+
+`varnishlog -m 'RxURL:/client-perf' |grep 'X-Forwarded-For'`
