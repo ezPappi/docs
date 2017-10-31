@@ -1,0 +1,31 @@
+Show most requested URLs from backend
+	varnishtop -i BereqURL
+Show specific requested URLs from backend
+	varnishlog -q 'BereqURL ~ "^/forum/Themes/default/scripts/"
+Show requests for single URL
+	varnishlog -q 'ReqURL ~ "^/wiki/Translatetest"'
+Show backend responses
+	varnishlog -g request -q "RespStatus eq 503"
+	varnishlog -g request -q "BerespStatus eq 503"
+
+Show HTTP requests
+	varnishlog -q "ReqMethod eq PURGE"
+Show HTTP purges
+	varnishlog -q "VCL_return eq purge"
+Ban single URL
+	varnishadm 'ban req.url ~ "/adrelanos.asc"'
+	varnishadm 'ban req.url ~ "/wiki/Translatetest"'
+Ban all URLs
+	varnishadm 'ban req.url ~ "."'
+Show how many connections are currently open
+	netstat -anp | grep :443 | grep ESTABLISHED | wc -l
+
+Requests from a specific referrer
+Client and backend 
+	varnishlog -g request -q "ReqHeader ~ 'sportsnet.ca'"
+Backend only 
+	varnishlog -b -g request -q "ReqHeader ~ 'sportsnet.ca'"
+Requests for a specific method
+	varnishlog -g request -q "ReqMethod ~ 'PUT'"
+
+
