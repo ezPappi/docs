@@ -1,0 +1,2 @@
+Set up PTR record for your VM(s). --name is the name of the resource with definition of the official IP address.
+ az network public-ip update --resource-group VMS-ResourceGroup --name myip --reverse-fqdn host.domain.tld.
